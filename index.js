@@ -17,6 +17,7 @@ button.addEventListener("click", function () {
 input.addEventListener("keydown", function (event) {
     if (event.keyCode == 13) {
         GuessNumber();
+        input.value = "";
     }
 })
 
