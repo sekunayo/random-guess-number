@@ -1,3 +1,4 @@
+'use strict';
 let count = 0;
 let input = document.getElementById("number");
 let submit = document.getElementById("submit");
@@ -9,42 +10,43 @@ let random = Math.floor(Math.random() * 100) + 1;
 
 submit.addEventListener("click", function () {
     GuessNumber();
+    clear();
 })
-
+function clear(){
+    input.value = "";
+}
 button.addEventListener("click", function () {
     location.reload();
 })
 input.addEventListener("keydown", function (event) {
     if (event.keyCode == 13) {
         GuessNumber();
-        input.value = "";
+        clear();
     }
 })
-
+function displayMessage(string){
+    result.innerHTML = `${string}`;
+}
+function setStyles(){
+    button.classList.remove('hidden');
+    display.classList.add('hidden');
+}
 function GuessNumber() {
     count++;
     let num = Number(input.value);
-    numberOfGuesses.style.display = "block";
+    numberOfGuesses.classList.remove('hidden');
     numberOfGuesses.innerHTML += " " + input.value;
-    if (count > 10) {
-        result.innerHTML = "!!!GAME OVER!!!";
-        button.style.display = "block";
-        display.style.display = "none";
-
+    if (count > 9) {
+        displayMessage(`!!!GAME OVER!!!. The right guess is ${random}. Try your luck next time.`);
+        setStyles();
     } else {
         if (num === random) {
-            result.innerHTML = "Congratulations! You got it right";
+            displayMessage("Congratulations! You got it right");
             result.style.backgroundColor = "green";
-            display.style.display = "none";
-            button.style.display = "block";
-
-        } else if (num < random) {
-            display.innerHTML = "Last guess is too low!";
-            result.innerHTML = "Wrong!";
-            result.style.backgroundColor = "Red";
-        } else if (num > random) {
-            display.innerHTML = "Last guess is too high!";
-            result.innerHTML = "Wrong!";
+            setStyles();
+        } else if (num !== random) {
+            display.innerHTML = num < random ? "Last guess is too low!" : "Last guess is too high!";
+            displayMessage("Wrong!");
             result.style.backgroundColor = "Red";
         }
     }

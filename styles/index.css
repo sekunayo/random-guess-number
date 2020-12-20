@@ -32,9 +32,6 @@ input[type="submit"]{
     justify-content: flex-start;
     height: 60vh;
 }
-button{
-    display: none;
-}
-#previous{
+.hidden{
     display: none;
 }
